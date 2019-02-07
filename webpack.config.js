@@ -21,6 +21,9 @@ module.exports = {
     filename: '[name].js',
     publicPath: '/'
   },
+  alias: {
+    Styles: path.resolve(__dirname, 'public/bootstrap/css/')
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'src/index.tpl.html',

@@ -4,6 +4,7 @@ import NavBar from './NavBar/NavBar';
 import Customers from './Customers/Customers';
 import Products from './Products/Products';
 import Invoices from './Invoices/List/List';
+import { Button } from 'react-bootstrap';
 
 export default class App extends Component {
 
@@ -14,7 +15,7 @@ export default class App extends Component {
                     <NavBar />
                     <Route path='/customers' component={Customers} />
                     <Route path='/products' component={Products} />
-                    <Route path='/invoices' component={Invoices} />
+                    <Route exact path='/' component={Invoices} />
                 </div>
             </Router>
         );

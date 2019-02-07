@@ -1,6 +1,11 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import './style.css';
 
 export default (props) => {
-    return <div>Products</div>
+    return (
+        <Helmet>
+            <title>Products</title>
+        </Helmet>
+    );
 }

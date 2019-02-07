@@ -4,21 +4,23 @@ import { Link } from 'react-router-dom';
 
 const NavBar = (props) => {
     return (
-        <Navbar>
-            <Navbar.Brand className="navbar-brand">
+        <Navbar default collapseOnSelect>
+            <Navbar.Brand>
                 <Link to="/">Invoice App</Link>
             </Navbar.Brand>
-            <Nav>
-                <NavItem>
-                    <Link to="/invoices">Invoices</Link>
-                </NavItem>
-                <NavItem>
-                    <Link to="/products">Products</Link>
-                </NavItem>
-                <NavItem>
-                    <Link to='/customers'>Customers</Link>
-                </NavItem>
-            </Nav>
+            <Navbar.Collapse>
+                <Nav>
+                    <NavItem>
+                        <Link to="/">Invoices</Link>
+                    </NavItem>
+                    <NavItem>
+                        <Link to="/products">Products</Link>
+                    </NavItem>
+                    <NavItem>
+                        <Link to='/customers'>Customers</Link>
+                    </NavItem>
+                </Nav>
+            </Navbar.Collapse>
         </Navbar>
     )
 };
