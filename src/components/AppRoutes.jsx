@@ -7,7 +7,11 @@ import Invoices from './Invoices/List/List';
 import axios from 'axios';
 
 export default class App extends Component {
-    state = {}
+    state = {
+        customers: [],
+        products: [],
+        invoices: [],
+    }
     componentDidMount() {
         const url = '/api/';
         const urls = ['customers', 'products', 'invoices'];
@@ -29,7 +33,7 @@ export default class App extends Component {
                     <NavBar />
                     <Route path='/customers' render={() => <Customers customers={this.state.customers} />} />
                     <Route path='/products' render={() => <Products func={this.handleClick} products={this.state.products} />} />
-                    <Route exact path='/' component={Invoices} />
+                    <Route exact path='/' render={() => <Invoices list={this.state.invoices} />} />
                 </div>
             </Router>
         );

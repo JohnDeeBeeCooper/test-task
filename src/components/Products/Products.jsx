@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
-import '../style.css';
+import '../main.css';
 
 export default (props) => {
     return (
@@ -11,7 +11,7 @@ export default (props) => {
             </Helmet>
             <div className="header">
                 <h1>Product List</h1>
-                <Button>Create</Button>
+                <Button onClick={props.func} variant="outline-secondary">Create</Button>
             </div>
             <Table hover>
                 <thead>
@@ -22,7 +22,7 @@ export default (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {props.products.map(item => <tr>{Object.keys(item).map((product, idx) => idx <= 2 ? <td>{item[product]}</td> : null)}</tr>)}
+                    {props.products.map((item, id) => <tr key={id}>{Object.keys(item).map((product, idx) => idx <= 2 ? <td key={idx}>{item[product]}</td> : null)}</tr>)}
                 </tbody>
             </Table>
         </div>

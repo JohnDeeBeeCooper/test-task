@@ -1,9 +1,10 @@
 import React from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
-import '../style.css';
+import '../main.css';
 
 export default (props) => {
+    console.log(props);
     return (
         <div className="main">
             <Helmet>
@@ -11,7 +12,7 @@ export default (props) => {
             </Helmet>
             <div className="header">
                 <h1>Customer List</h1>
-                <Button>Create</Button>
+                <Button variant="outline-secondary">Create</Button>
             </div>
             <Table hover>
                 <thead>
@@ -23,7 +24,7 @@ export default (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {props.customers.map(item => <tr>{Object.keys(item).map((product, idx) => idx <= 3 ? <td>{item[product]}</td> : null)}</tr>)}
+                    {props.customers.map((item, id) => <tr key={id}>{Object.keys(item).map((customer, idx) => idx <= 3 ? <td key={idx}>{item[customer]}</td> : null)}</tr>)}
                 </tbody>
             </Table>
         </div>
