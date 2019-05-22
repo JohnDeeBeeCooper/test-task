@@ -7,9 +7,9 @@ import store from './store';
 import 'react-select/dist/react-select.css';
 
 
-// store.subscribe(() => {
-//     console.log(store.getState());
-// })
+store.subscribe(() => {
+    console.log(store.getState());
+})
 
 const app = (
     <Provider store={store}>

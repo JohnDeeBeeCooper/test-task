@@ -1,13 +1,48 @@
 .main {
-    max-width: 75%;
-    margin: 0 auto;
-    padding: 2rem 4rem;
+  max-width: 70%;
+  margin: 0 auto;
+  padding: 2rem 4rem;
 }
 .header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .btn {
-    margin: 20px;
+  margin: 20px;
+}
+.hidden-container {
+  visibility: hidden;
+  display: flex;
+  justify-content: space-between;
+}
+.hidden-cell {
+  max-width: 20px;
+  min-width: 10px;
+}
+tr:hover div {
+  visibility: visible;
+}
+span {
+  color: #290ccc;
+  align-items: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.delete-item {
+  background: #a62d2d;
+  height: 15px;
+  position: relative;
+  transform: rotate(45deg);
+  width: 3px;
+  margin-top: 4px;
+}
+.delete-item:after {
+  background: #a62d2d;
+  content: "";
+  height: 3px;
+  left: -6px;
+  position: absolute;
+  top: 6px;
+  width: 15px;
 }
