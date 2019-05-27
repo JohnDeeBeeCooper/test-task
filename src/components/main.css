@@ -1,5 +1,5 @@
 .main {
-  max-width: 70%;
+  max-width: 75%;
   margin: 0 auto;
   padding: 2rem 4rem;
 }
@@ -24,13 +24,13 @@ tr:hover div {
   visibility: visible;
 }
 span {
-  color: #290ccc;
+  color: #007BFF;
   align-items: center;
   vertical-align: middle;
   cursor: pointer;
 }
 .delete-item {
-  background: #a62d2d;
+  background: #6C757D;
   height: 15px;
   position: relative;
   transform: rotate(45deg);
@@ -38,7 +38,7 @@ span {
   margin-top: 4px;
 }
 .delete-item:after {
-  background: #a62d2d;
+  background: #6C757D;
   content: "";
   height: 3px;
   left: -6px;

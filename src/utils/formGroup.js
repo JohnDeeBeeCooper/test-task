@@ -1,19 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import { Form } from "react-bootstrap";
 
 export default props => {
-  const { input, ...inputProps } = props;
+  const { input, name, placeholder, type, value } = props;
   return (
     <Form.Group>
-      <Form.Label>{props.name}</Form.Label>
+      <Form.Label>{name}</Form.Label>
       <Form.Control
-        placeholder={props.placeholder}
-        {...inputProps}
-        onChange={input.onChange}
-        onBlur={input.onBlur}
-        onFocus={input.onFocus}
-        value={input.value}
+        placeholder={placeholder}
+        {...input}
         required
+        type={type}
+        value={value || ''}
       />
     </Form.Group>
   );

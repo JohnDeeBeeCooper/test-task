@@ -1,7 +1,12 @@
 import React, { Component } from "react";
-import { Table, Button, Modal } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import { Helmet } from "react-helmet";
-import { fetchData, deleteData, createProduct } from "../../store/actions/data";
+import {
+  fetchData,
+  deleteData,
+  createData,
+  getData
+} from "../../store/actions/data";
 import { openForm } from "../../store/actions/form";
 import { connect } from "react-redux";
 import "../main.css";
@@ -11,32 +16,35 @@ class Products extends Component {
   componentDidMount() {
     this.props.fetchData();
   }
-  formOpening = param => {
+  formOpening = id => {
     this.props.openForm();
+    if (id) {
+      this.props.getData("products", id);
+    }
   };
-  deleteProduct = id => {
+  deleteItem = id => {
     this.props.deleteData("products", id);
   };
+  postData = formData => {
+    console.log(formData);
+    this.props.createData("products", formData);
+  };
   renderModal() {
-    const postData = formData => {
-      console.log(formData);
-      this.props.createProduct("products", formData);
-    };
     return (
       <Form
         show={this.props.formOpen}
         onHide={this.formOpening}
-        func={postData}
+        func={this.postData}
       />
     );
   }
-  renderTable() {
+  render() {
     return (
       <div className="main">
         <Helmet>
           <title>Products</title>
         </Helmet>
-        {this.renderModal()};
+        {this.renderModal()}
         <div className="header">
           <h1>Product List</h1>
           <Button
@@ -63,9 +71,9 @@ class Products extends Component {
                 )}
                 <td className="hidden-cell">
                   <div className="hidden-container">
-                    <span onClick={() => this.formOpening}>edit</span>
+                    <span onClick={() => this.formOpening(item.id)}>edit</span>
                     <span
-                      onClick={() => this.deleteProduct(item.id)}
+                      onClick={() => this.deleteItem(item.id)}
                       className="delete-item"
                     />
                   </div>
@@ -76,9 +84,6 @@ class Products extends Component {
         </Table>
       </div>
     );
-  }
-  render() {
-    return this.renderTable();
   }
 }
 
@@ -94,7 +99,8 @@ const mapDispatchToProps = dispatch => {
     fetchData: () => dispatch(fetchData("products")),
     deleteData: (url, id) => dispatch(deleteData(url, id)),
     openForm: () => dispatch(openForm()),
-    createProduct: (url, data) => dispatch(createProduct(url, data))
+    createData: (url, data) => dispatch(createData(url, data)),
+    getData: (url, id) => dispatch(getData(url, id))
   };
 };
 export default connect(

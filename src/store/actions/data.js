@@ -1,5 +1,6 @@
 import * as types from "./actionTypes";
 import API from "../../api/index";
+import { getDataForm } from "./form";
 
 const fetchingData = () => {
   return {
@@ -25,8 +26,16 @@ const fetchData = url => {
         dispatch(fetchDataSuccess({ [`${url}`]: res.data }));
       })
       .catch(err => {
-        console.log(err);
+        dispatch(fetchDataFail());
       });
+  };
+};
+const getData = (url, id) => {
+  return dispatch => {
+    API.get(`${url}/${id}`).then(res => {
+      console.log(res.data);
+      dispatch(getDataForm(res.data));
+    });
   };
 };
 const deleteData = (url, id) => {
@@ -34,18 +43,24 @@ const deleteData = (url, id) => {
     API.delete(`${url}/${id}`).then(dispatch(fetchData(url)));
   };
 };
-const createProduct = (url, data) => {
-  const { name, price } = data;
-  console.log(name, price)
+const createData = (url, data) => {
   return dispatch => {
-    API.post(url, { name: name, price: price }).then(dispatch(fetchData(url)));
+    API.post(url, { ...data }).then(dispatch(fetchData(url)));
   };
 };
+const updateData = (url, id, data) => {
+  return dispatch => {
+    API.put(`${url}/${id}`, { ...data }).then(dispatch(fetchData(url)));
+  };
+};
+
 export {
   fetchingData,
   fetchDataSuccess,
   fetchDataFail,
   fetchData,
   deleteData,
-  createProduct
+  createData,
+  updateData,
+  getData
 };
