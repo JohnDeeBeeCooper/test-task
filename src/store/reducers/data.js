@@ -1,41 +1,39 @@
 import * as types from "../actions/actionTypes";
+import update from "immutability-helper";
 
 const initialState = {
   data: { customers: [], products: [], invoices: [] },
-  isLoading: true,
   formData: {},
-  error: false,
-  formOpen: false
+  formOpen: false,
+  modalOpen: false,
+  deleteId: null
 };
 const reducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case types.FETCHING_DATA:
-      return {
-        ...state,
-        isLoading: true
-      };
     case types.FETCHING_DATA_SUCCESS:
-      return {
-        ...state,
-        data: { ...state.data, ...payload },
-        isLoading: false,
-        formData: {}
-      };
-    case types.FETCHING_DATA_FAILURE:
-      return {
-        ...state,
-        isLoading: false,
-        error: true,
-        formData: {}
-      };
+      const { data } = state;
+      return update(state, {
+        data: { $set: { ...data, ...payload } },
+        formData: { $set: {} }
+      });
+    //return newState;
     case types.OPEN_FORM:
-      return {
-        ...state,
-        formOpen: !state.formOpen
-      };
+      const { formOpen } = state;
+      return update(state, {
+        formOpen: { $set: !formOpen }
+      });
+    //return newState;
+    case types.OPEN_MODAL:
+      const { modalOpen } = state;
+      return update(state, {
+        modalOpen: { $set: !modalOpen },
+        deleteId: { $set: payload }
+      });
+    //return newState;
     case types.GET_FORM_DATA:
-      return { ...state, formData: payload };
+      return update(state, { formData: { $set: payload } });
+    //return newState;
     default:
       return state;
   }

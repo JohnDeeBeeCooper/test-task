@@ -2,18 +2,16 @@ import React from "react";
 import { Col, Row, Modal, Button, Form } from "react-bootstrap";
 import { reduxForm, Field } from "redux-form";
 import formGroup from "../formGroup";
+import { connect } from "react-redux";
 
 const CustomerForm = props => {
-  const {
-    show,
-    onHide,
-    handleSubmit,
-    reset,
-    func,
-    name,
-    address,
-    phone
-  } = props;
+  const { show, onHide, handleSubmit, reset, func } = props;
+  console.log("log");
+  console.log(props.initialValues);
+  const onClose = id => {
+    console.log("closeId" + id);
+    onHide(id);
+  };
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header>
@@ -29,8 +27,7 @@ const CustomerForm = props => {
                 props={{
                   name: "Name",
                   placeholder: "Enter customer name",
-                  type: "text",
-                  value: name || ""
+                  type: "text"
                 }}
               />
             </Col>
@@ -41,8 +38,7 @@ const CustomerForm = props => {
                 props={{
                   name: "Phone",
                   placeholder: "Enter customer phone",
-                  type: "number",
-                  value: phone || ""
+                  type: "text"
                 }}
               />
             </Col>
@@ -53,11 +49,10 @@ const CustomerForm = props => {
             props={{
               name: "Address",
               placeholder: "Enter customer address",
-              type: "text",
-              value: address || ""
+              type: "text"
             }}
           />
-          <Button variant="secondary" onClick={onHide}>
+          <Button variant="secondary" onClick={() => onClose()}>
             Close
           </Button>
           <Button variant="primary" type="submit">
@@ -70,7 +65,12 @@ const CustomerForm = props => {
 };
 
 const customerForm = reduxForm({
-  form: "CustomerForm"
+  form: "CustomerForm",
+  enableReinitialize: true
 })(CustomerForm);
 
-export default customerForm;
+const mapStateToProps = ({ data }) => {
+  const { formData } = data;
+  return { initialValues: formData };
+};
+export default connect(mapStateToProps)(customerForm);

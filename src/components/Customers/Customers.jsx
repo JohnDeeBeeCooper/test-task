@@ -1,24 +1,33 @@
 import React, { Component } from "react";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Container } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
-import { openForm } from "../../store/actions/form";
-import { fetchData, deleteData, createData } from "../../store/actions/data";
+import { openForm } from "../../store/actions/other";
+import {
+  fetchData,
+  deleteData,
+  createData,
+  getData
+} from "../../store/actions/data";
 import "../main.css";
 import Form from "../../utils/Forms/CustomerForm";
+import API from "../../api/";
 
 class Customers extends Component {
   componentDidMount() {
-    this.props.fetchData();
+    this.props.fetchData("customers");
   }
-  formOpening = param => {
+  formOpening = id => {
+    console.log("id" + id);
     this.props.openForm();
+    if (id) {
+      this.props.getData("customers", id);
+    }
   };
   deleteItem = id => {
     this.props.deleteData("customers", id);
   };
   postData = formData => {
-    console.log(formData);
     this.props.createData("customers", formData);
   };
   renderModal() {
@@ -32,7 +41,7 @@ class Customers extends Component {
   }
   render() {
     return (
-      <div className="main">
+      <Container>
         <Helmet>
           <title>Customers</title>
         </Helmet>
@@ -64,7 +73,7 @@ class Customers extends Component {
                 )}
                 <td>
                   <div className="hidden-container">
-                    <span onClick={() => this.formOpening()}>edit</span>
+                    <span onClick={() => this.formOpening(item.id)}>edit</span>
                     <span
                       onClick={() => this.deleteItem(item.id)}
                       className="delete-item"
@@ -75,7 +84,7 @@ class Customers extends Component {
             ))}
           </tbody>
         </Table>
-      </div>
+      </Container>
     );
   }
 }
@@ -87,13 +96,12 @@ const mapStateToProps = ({ data }) => {
   } = data;
   return { customers, formOpen };
 };
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchData: () => dispatch(fetchData("customers")),
-    deleteData: (url, id) => dispatch(deleteData(url, id)),
-    openForm: () => dispatch(openForm()),
-    createData: (url, data) => dispatch(createData(url, data))
-  };
+const mapDispatchToProps = {
+  fetchData,
+  deleteData,
+  openForm,
+  createData,
+  getData
 };
 
 export default connect(

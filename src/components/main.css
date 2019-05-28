@@ -24,13 +24,13 @@ tr:hover div {
   visibility: visible;
 }
 span {
-  color: #007BFF;
+  color: #007bff;
   align-items: center;
   vertical-align: middle;
   cursor: pointer;
 }
 .delete-item {
-  background: #6C757D;
+  background: #6c757d;
   height: 15px;
   position: relative;
   transform: rotate(45deg);
@@ -38,7 +38,7 @@ span {
   margin-top: 4px;
 }
 .delete-item:after {
-  background: #6C757D;
+  background: #6c757d;
   content: "";
   height: 3px;
   left: -6px;

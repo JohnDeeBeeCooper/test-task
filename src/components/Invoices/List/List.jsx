@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Container } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import { fetchData } from "../../../store/actions/data";
@@ -7,12 +7,12 @@ import "../../main.css";
 
 class Invoices extends Component {
   componentDidMount() {
-    this.props.fetchData();
+    this.props.fetchData("invoices");
   }
 
   render() {
     return (
-      <div className="main">
+      <Container>
         <Helmet>
           <title>Invoice App</title>
         </Helmet>
@@ -47,7 +47,7 @@ class Invoices extends Component {
             ))}
           </tbody>
         </Table>
-      </div>
+      </Container>
     );
   }
 }
@@ -58,10 +58,8 @@ const mapStateToProps = ({ data }) => {
   } = data;
   return { invoices };
 };
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchData: () => dispatch(fetchData("invoices"))
-  };
+const mapDispatchToProps = {
+  fetchData
 };
 
 export default connect(

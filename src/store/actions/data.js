@@ -1,46 +1,39 @@
 import * as types from "./actionTypes";
 import API from "../../api/index";
-import { getDataForm } from "./form";
+import { getDataForm } from "./other";
 
-const fetchingData = () => {
-  return {
-    type: types.FETCHING_DATA
-  };
-};
 const fetchDataSuccess = data => {
   return {
     type: types.FETCHING_DATA_SUCCESS,
     payload: data
   };
 };
-const fetchDataFail = () => {
-  return {
-    type: types.FETCHING_DATA_FAILURE
-  };
-};
 const fetchData = url => {
   return dispatch => {
-    dispatch(fetchingData());
     API.get(url)
       .then(res => {
         dispatch(fetchDataSuccess({ [`${url}`]: res.data }));
       })
       .catch(err => {
-        dispatch(fetchDataFail());
+        console.log(err);
       });
   };
 };
 const getData = (url, id) => {
   return dispatch => {
-    API.get(`${url}/${id}`).then(res => {
-      console.log(res.data);
-      dispatch(getDataForm(res.data));
-    });
+    API.get(`${url}/${id}`)
+      .then(res => {
+        dispatch(getDataForm(res.data));
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 };
 const deleteData = (url, id) => {
   return dispatch => {
-    API.delete(`${url}/${id}`).then(dispatch(fetchData(url)));
+    API.delete(`${url}/${id}`);
+    dispatch(fetchData(url));
   };
 };
 const createData = (url, data) => {
@@ -55,9 +48,7 @@ const updateData = (url, id, data) => {
 };
 
 export {
-  fetchingData,
   fetchDataSuccess,
-  fetchDataFail,
   fetchData,
   deleteData,
   createData,

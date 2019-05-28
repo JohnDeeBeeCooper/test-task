@@ -11,4 +11,8 @@ const getDataForm = data => ({
   type: types.GET_FORM_DATA,
   payload: data
 });
-export { openForm, editForm, getDataForm };
+const openModal = id => ({
+  type: types.OPEN_MODAL,
+  payload: id
+});
+export { openForm, editForm, getDataForm, openModal };

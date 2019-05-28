@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Container } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import {
   fetchData,
@@ -7,14 +7,15 @@ import {
   createData,
   getData
 } from "../../store/actions/data";
-import { openForm } from "../../store/actions/form";
+import { openForm, openModal } from "../../store/actions/other";
 import { connect } from "react-redux";
 import "../main.css";
 import Form from "../../utils/Forms/ProductForm";
+import DeleteModal from "../../utils/DeleteModal";
 
 class Products extends Component {
   componentDidMount() {
-    this.props.fetchData();
+    this.props.fetchData("products");
   }
   formOpening = id => {
     this.props.openForm();
@@ -26,10 +27,9 @@ class Products extends Component {
     this.props.deleteData("products", id);
   };
   postData = formData => {
-    console.log(formData);
     this.props.createData("products", formData);
   };
-  renderModal() {
+  renderForm() {
     return (
       <Form
         show={this.props.formOpen}
@@ -38,12 +38,19 @@ class Products extends Component {
       />
     );
   }
+  renderModal() {
+    const { modalOpen, openModal } = this.props;
+    return (
+      <DeleteModal show={modalOpen} onHide={openModal} func={this.deleteItem} />
+    );
+  }
   render() {
     return (
-      <div className="main">
+      <Container>
         <Helmet>
           <title>Products</title>
         </Helmet>
+        {this.renderForm()}
         {this.renderModal()}
         <div className="header">
           <h1>Product List</h1>
@@ -73,7 +80,7 @@ class Products extends Component {
                   <div className="hidden-container">
                     <span onClick={() => this.formOpening(item.id)}>edit</span>
                     <span
-                      onClick={() => this.deleteItem(item.id)}
+                      onClick={() => this.props.openModal(item.id)}
                       className="delete-item"
                     />
                   </div>
@@ -82,7 +89,7 @@ class Products extends Component {
             ))}
           </tbody>
         </Table>
-      </div>
+      </Container>
     );
   }
 }
@@ -90,18 +97,18 @@ class Products extends Component {
 const mapStateToProps = ({ data }) => {
   const {
     data: { products },
-    formOpen
+    formOpen,
+    modalOpen
   } = data;
-  return { products, formOpen };
+  return { products, formOpen, modalOpen };
 };
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchData: () => dispatch(fetchData("products")),
-    deleteData: (url, id) => dispatch(deleteData(url, id)),
-    openForm: () => dispatch(openForm()),
-    createData: (url, data) => dispatch(createData(url, data)),
-    getData: (url, id) => dispatch(getData(url, id))
-  };
+const mapDispatchToProps = {
+  fetchData,
+  deleteData,
+  openForm,
+  createData,
+  getData,
+  openModal
 };
 export default connect(
   mapStateToProps,

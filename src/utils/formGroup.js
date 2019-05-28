@@ -3,6 +3,8 @@ import { Form } from "react-bootstrap";
 
 export default props => {
   const { input, name, placeholder, type, value } = props;
+  console.log("log");
+  console.log(input);
   return (
     <Form.Group>
       <Form.Label>{name}</Form.Label>
@@ -11,7 +13,6 @@ export default props => {
         {...input}
         required
         type={type}
-        value={value || ''}
       />
     </Form.Group>
   );
