@@ -25,7 +25,8 @@ const DeleteModal = props => {
     </Modal>
   );
 };
-const mapStateToProps = ({ data }) => ({
-  deleteId: data.deleteId
-});
+const mapStateToProps = ({ data }) => {
+  const { deleteId } = data;
+  return { deleteId };
+};
 export default connect(mapStateToProps)(DeleteModal);

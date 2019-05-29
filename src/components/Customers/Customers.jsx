@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Table, Button, Container } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
-import { openForm } from "../../store/actions/other";
+import { openForm, openModal } from "../../store/actions/other";
 import {
   fetchData,
   deleteData,
@@ -11,14 +11,13 @@ import {
 } from "../../store/actions/data";
 import "../main.css";
 import Form from "../../utils/Forms/CustomerForm";
-import API from "../../api/";
+import DeleteModal from "../../utils/DeleteModal";
 
 class Customers extends Component {
   componentDidMount() {
     this.props.fetchData("customers");
   }
   formOpening = id => {
-    console.log("id" + id);
     this.props.openForm();
     if (id) {
       this.props.getData("customers", id);
@@ -30,7 +29,7 @@ class Customers extends Component {
   postData = formData => {
     this.props.createData("customers", formData);
   };
-  renderModal() {
+  renderForm() {
     return (
       <Form
         show={this.props.formOpen}
@@ -39,12 +38,19 @@ class Customers extends Component {
       />
     );
   }
+  renderModal() {
+    const { modalOpen, openModal } = this.props;
+    return (
+      <DeleteModal show={modalOpen} onHide={openModal} func={this.deleteItem} />
+    );
+  }
   render() {
     return (
       <Container>
         <Helmet>
           <title>Customers</title>
         </Helmet>
+        {this.renderForm()}
         {this.renderModal()}
         <div className="header">
           <h1>Customer List</h1>
@@ -75,7 +81,7 @@ class Customers extends Component {
                   <div className="hidden-container">
                     <span onClick={() => this.formOpening(item.id)}>edit</span>
                     <span
-                      onClick={() => this.deleteItem(item.id)}
+                      onClick={() => this.props.openModal(item.id)}
                       className="delete-item"
                     />
                   </div>
@@ -92,16 +98,18 @@ class Customers extends Component {
 const mapStateToProps = ({ data }) => {
   const {
     data: { customers },
-    formOpen
+    formOpen,
+    modalOpen
   } = data;
-  return { customers, formOpen };
+  return { customers, formOpen, modalOpen };
 };
 const mapDispatchToProps = {
   fetchData,
   deleteData,
   openForm,
   createData,
-  getData
+  getData,
+  openModal
 };
 
 export default connect(

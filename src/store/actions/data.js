@@ -31,19 +31,21 @@ const getData = (url, id) => {
   };
 };
 const deleteData = (url, id) => {
-  return dispatch => {
-    API.delete(`${url}/${id}`);
+  return async dispatch => {
+    await API.delete(`${url}/${id}`);
     dispatch(fetchData(url));
   };
 };
 const createData = (url, data) => {
-  return dispatch => {
-    API.post(url, { ...data }).then(dispatch(fetchData(url)));
+  return async dispatch => {
+    await API.post(url, { ...data });
+    dispatch(fetchData(url));
   };
 };
 const updateData = (url, id, data) => {
-  return dispatch => {
-    API.put(`${url}/${id}`, { ...data }).then(dispatch(fetchData(url)));
+  return async dispatch => {
+    await API.put(`${url}/${id}`, { ...data });
+    dispatch(fetchData(url));
   };
 };
 

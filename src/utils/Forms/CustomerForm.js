@@ -6,10 +6,7 @@ import { connect } from "react-redux";
 
 const CustomerForm = props => {
   const { show, onHide, handleSubmit, reset, func } = props;
-  console.log("log");
-  console.log(props.initialValues);
   const onClose = id => {
-    console.log("closeId" + id);
     onHide(id);
   };
   return (
