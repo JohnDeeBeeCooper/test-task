@@ -30,7 +30,7 @@ span {
   cursor: pointer;
 }
 .delete-item {
-  background: #6c757d;
+  background: #e03346;
   height: 15px;
   position: relative;
   transform: rotate(45deg);
@@ -38,7 +38,7 @@ span {
   margin-top: 4px;
 }
 .delete-item:after {
-  background: #6c757d;
+  background: #e03346;
   content: "";
   height: 3px;
   left: -6px;

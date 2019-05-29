@@ -1,25 +1,26 @@
 import React from "react";
 import { Col, Row, Modal, Button, Form } from "react-bootstrap";
 import { reduxForm, Field } from "redux-form";
-import formGroup from "../formGroup";
+import HandleFormGroup from "../HandleFormGroup";
 import { connect } from "react-redux";
 
 const ProductForm = props => {
-  const { show, onHide, handleSubmit, reset, func } = props;
+  const { show, onHide, handleSubmit, reset, func, formAction } = props;
   const onClose = () => {
     reset();
     onHide();
   };
+  const title = formAction === "EDIT" ? "Edit product" : "Create product";
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header>
-        <Modal.Title>Create Product</Modal.Title>
+        <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit(func)}>
           <Field
             name="name"
-            component={formGroup}
+            component={HandleFormGroup}
             props={{
               name: "Name",
               placeholder: "Enter product name"
@@ -28,7 +29,7 @@ const ProductForm = props => {
 
           <Field
             name="price"
-            component={formGroup}
+            component={HandleFormGroup}
             props={{
               name: "Price",
               placeholder: "Enter product price"
@@ -52,7 +53,9 @@ const productForm = reduxForm({
 })(ProductForm);
 
 const mapStateToProps = ({ data }) => {
-  const { formData } = data;
-  return { initialValues: formData };
+  const {
+    form: { formData, formAction }
+  } = data;
+  return { initialValues: formData, formAction };
 };
 export default connect(mapStateToProps)(productForm);

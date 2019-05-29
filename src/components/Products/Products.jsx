@@ -5,6 +5,7 @@ import {
   fetchData,
   deleteData,
   createData,
+  updateData,
   getData
 } from "../../store/actions/data";
 import { openForm, openModal } from "../../store/actions/other";
@@ -17,22 +18,36 @@ class Products extends Component {
   componentDidMount() {
     this.props.fetchData("products");
   }
-  formOpening = id => {
-    this.props.openForm();
+  formOpening = (action, id) => {
+    const { getData, openForm } = this.props;
+    openForm(action);
     if (id) {
-      this.props.getData("products", id);
+      getData("products", id);
     }
   };
   deleteItem = id => {
     this.props.deleteData("products", id);
   };
   postData = formData => {
+    const { formAction, createData, updateData } = this.props;
+    const { id } = formData;
+    switch (formAction) {
+      case "EDIT":
+        updateData("products", id, formData);
+        break;
+      case "CREATE":
+        createData("products", formData);
+        break;
+      default:
+        console.log("ERROOOOOOOOORRRRRR" + formAction);
+        break;
+    }
     this.props.createData("products", formData);
   };
   renderForm() {
     return (
       <Form
-        show={this.props.formOpen}
+        show={this.props.isOpen}
         onHide={this.formOpening}
         func={this.postData}
       />
@@ -56,7 +71,7 @@ class Products extends Component {
           <h1>Product List</h1>
           <Button
             variant="outline-secondary"
-            onClick={() => this.formOpening()}
+            onClick={() => this.formOpening("CREATE")}
           >
             Create
           </Button>
@@ -78,7 +93,9 @@ class Products extends Component {
                 )}
                 <td className="hidden-cell">
                   <div className="hidden-container">
-                    <span onClick={() => this.formOpening(item.id)}>edit</span>
+                    <span onClick={() => this.formOpening("EDIT", item.id)}>
+                      edit
+                    </span>
                     <span
                       onClick={() => this.props.openModal(item.id)}
                       className="delete-item"
@@ -97,14 +114,15 @@ class Products extends Component {
 const mapStateToProps = ({ data }) => {
   const {
     data: { products },
-    formOpen,
+    form: { isOpen },
     modalOpen
   } = data;
-  return { products, formOpen, modalOpen };
+  return { products, isOpen, modalOpen };
 };
 const mapDispatchToProps = {
   fetchData,
   deleteData,
+  updateData,
   openForm,
   createData,
   getData,

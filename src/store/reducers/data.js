@@ -3,8 +3,7 @@ import update from "immutability-helper";
 
 const initialState = {
   data: { customers: [], products: [], invoices: [] },
-  formData: {},
-  formOpen: false,
+  form: { formData: {}, isOpen: false, formAction: "CREATE" },
   modalOpen: false,
   deleteId: null
 };
@@ -15,25 +14,26 @@ const reducer = (state = initialState, action) => {
       const { data } = state;
       return update(state, {
         data: { $set: { ...data, ...payload } },
-        formData: { $set: {} }
+        form: { formData: { $set: {} } }
       });
-    //return newState;
     case types.OPEN_FORM:
-      const { formOpen } = state;
+      const {
+        form: { isOpen }
+      } = state;
       return update(state, {
-        formOpen: { $set: !formOpen }
+        form: {
+          isOpen: { $set: !isOpen },
+          formAction: { $set: payload }
+        }
       });
-    //return newState;
     case types.OPEN_MODAL:
       const { modalOpen } = state;
       return update(state, {
         modalOpen: { $set: !modalOpen },
         deleteId: { $set: payload }
       });
-    //return newState;
     case types.GET_FORM_DATA:
-      return update(state, { formData: { $set: payload } });
-    //return newState;
+      return update(state, { form: { formData: { $set: payload } } });
     default:
       return state;
   }

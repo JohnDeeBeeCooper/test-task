@@ -1,15 +1,7 @@
-export const FETCHING_DATA = "FETCHING_DATA";
 export const FETCHING_DATA_SUCCESS = "FETCHING_DATA_SUCCESS";
 export const FETCH_DATA = "FETCH_DATA";
-
-export const EDIT_CUSTOMERS = "EDIT_CUSTOMERS";
-export const CREATE_CUSTOMER = "CREATE_CUSTOMERS";
-
-export const EDIT_PRODUCTS = "EDIT_PRODUCTS";
-export const CREATE_PRODUCT = "CREATE_PRODUCT";
 
 export const OPEN_MODAL = "OPEN_MODAL";
 
 export const OPEN_FORM = "OPEN_FORM";
-export const EDIT_FORM = "EDIT_FORM";
 export const GET_FORM_DATA = "GET_FORM_DATA";

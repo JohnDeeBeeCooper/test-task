@@ -9,25 +9,15 @@ const fetchDataSuccess = data => {
   };
 };
 const fetchData = url => {
-  return dispatch => {
-    API.get(url)
-      .then(res => {
-        dispatch(fetchDataSuccess({ [`${url}`]: res.data }));
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  return async dispatch => {
+    const { data } = await API.get(url);
+    dispatch(fetchDataSuccess({ [`${url}`]: data }));
   };
 };
 const getData = (url, id) => {
-  return dispatch => {
-    API.get(`${url}/${id}`)
-      .then(res => {
-        dispatch(getDataForm(res.data));
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  return async dispatch => {
+    const { data } = await API.get(`${url}/${id}`);
+    dispatch(getDataForm(data));
   };
 };
 const deleteData = (url, id) => {
