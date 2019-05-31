@@ -8,7 +8,7 @@ import {
   updateData,
   getData
 } from "../../store/actions/data";
-import { openForm, openModal } from "../../store/actions/other";
+import { openForm, openModal, closeForm } from "../../store/actions/other";
 import { connect } from "react-redux";
 import "../main.css";
 import Form from "../../utils/Forms/ProductForm";
@@ -42,16 +42,10 @@ class Products extends Component {
         console.log("ERROOOOOOOOORRRRRR" + formAction);
         break;
     }
-    this.props.createData("products", formData);
   };
   renderForm() {
-    return (
-      <Form
-        show={this.props.isOpen}
-        onHide={this.formOpening}
-        func={this.postData}
-      />
-    );
+    const { isOpen, closeForm } = this.props;
+    return <Form show={isOpen} onHide={closeForm} func={this.postData} />;
   }
   renderModal() {
     const { modalOpen, openModal } = this.props;
@@ -114,10 +108,10 @@ class Products extends Component {
 const mapStateToProps = ({ data }) => {
   const {
     data: { products },
-    form: { isOpen },
+    form: { isOpen, formAction },
     modalOpen
   } = data;
-  return { products, isOpen, modalOpen };
+  return { products, isOpen, modalOpen, formAction };
 };
 const mapDispatchToProps = {
   fetchData,
@@ -126,7 +120,8 @@ const mapDispatchToProps = {
   openForm,
   createData,
   getData,
-  openModal
+  openModal,
+  closeForm
 };
 export default connect(
   mapStateToProps,

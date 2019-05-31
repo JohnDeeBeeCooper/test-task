@@ -14,7 +14,6 @@ sequelize = new Sequelize(
     storage: path.join(__dirname, "invoices.sqlite")
   }
 );
-console.log(process.env.NODE_ENV);
 
 Customer = sequelize.define("customers", {
   id: {
@@ -322,8 +321,8 @@ const webpackMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require("webpack-hot-middleware");
 const config = require("./webpack.config.js");
 
-// const isDeveloping = process.env.NODE_ENV !== "production";
-// const port = isDeveloping ? 3000 : process.env.PORT;
+const isDeveloping = process.env.NODE_ENV !== "production";
+const port = isDeveloping ? 3000 : process.env.PORT;
 
 if (isDeveloping) {
   const compiler = webpack(config);
@@ -358,6 +357,6 @@ if (isDeveloping) {
 }
 
 // Starting express server
-http.createServer(app).listen(process.env.PORT || 3000, function() {
-  console.log("Express server listening on port " + app.get("port"));
+http.createServer(app).listen(port, function() {
+  console.log("Express server listening on port " + port);
 });

@@ -17,15 +17,19 @@ const reducer = (state = initialState, action) => {
         form: { formData: { $set: {} } }
       });
     case types.OPEN_FORM:
-      const {
-        form: { isOpen }
-      } = state;
       return update(state, {
         form: {
-          isOpen: { $set: !isOpen },
+          isOpen: { $set: true },
           formAction: { $set: payload }
         }
       });
+    case types.CLOSE_FORM:
+      return update(state, {
+        form: {
+          isOpen: { $set: false }
+        }
+      });
+
     case types.OPEN_MODAL:
       const { modalOpen } = state;
       return update(state, {

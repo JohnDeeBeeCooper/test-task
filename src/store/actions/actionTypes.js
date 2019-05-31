@@ -4,4 +4,5 @@ export const FETCH_DATA = "FETCH_DATA";
 export const OPEN_MODAL = "OPEN_MODAL";
 
 export const OPEN_FORM = "OPEN_FORM";
+export const CLOSE_FORM = "CLOSE_FORM";
 export const GET_FORM_DATA = "GET_FORM_DATA";

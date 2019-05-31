@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Table, Button, Container } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
-import { openForm, openModal } from "../../store/actions/other";
+import { openForm, openModal, closeForm } from "../../store/actions/other";
 import {
   fetchData,
   deleteData,
@@ -29,7 +29,7 @@ class Customers extends Component {
     this.props.deleteData("customers", id);
   };
   postData = formData => {
-    const { formAction, createData, updateData, editId } = this.props;
+    const { formAction, createData, updateData } = this.props;
     const { id } = formData;
     switch (formAction) {
       case "EDIT":
@@ -42,16 +42,10 @@ class Customers extends Component {
         console.log("ERROOOOOOOOORRRRRR" + formAction);
         break;
     }
-    this.props.createData("customers", formData);
   };
   renderForm() {
-    return (
-      <Form
-        show={this.props.isOpen}
-        onHide={this.formOpening}
-        func={this.postData}
-      />
-    );
+    const { isOpen, closeForm } = this.props;
+    return <Form show={isOpen} onHide={closeForm} func={this.postData} />;
   }
   renderModal() {
     const { modalOpen, openModal } = this.props;
@@ -115,10 +109,10 @@ class Customers extends Component {
 const mapStateToProps = ({ data }) => {
   const {
     data: { customers },
-    form: { isOpen },
+    form: { isOpen, formAction },
     modalOpen
   } = data;
-  return { customers, isOpen, modalOpen };
+  return { customers, isOpen, modalOpen, formAction };
 };
 const mapDispatchToProps = {
   fetchData,
@@ -127,7 +121,8 @@ const mapDispatchToProps = {
   createData,
   getData,
   updateData,
-  openModal
+  openModal,
+  closeForm
 };
 
 export default connect(

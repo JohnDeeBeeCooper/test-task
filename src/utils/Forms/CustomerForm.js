@@ -6,7 +6,8 @@ import { connect } from "react-redux";
 
 const CustomerForm = props => {
   const { show, onHide, handleSubmit, reset, func, formAction } = props;
-  const onClose = () => {
+  const onClose = formData => {
+    func(formData);
     reset();
     onHide();
   };
@@ -17,7 +18,7 @@ const CustomerForm = props => {
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={handleSubmit(func)}>
+        <Form onSubmit={handleSubmit(onClose)}>
           <Row>
             <Col>
               <Field
